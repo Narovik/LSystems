@@ -45,8 +45,6 @@ float angle = default_angle;
 float angle_chaos = default_angle_chaos;
 float extension = default_extension;
 float extension_chaos = default_extension_chaos;
-float aleatorio = random(-1.0 * extension * extension_chaos, extension * extension_chaos);
-float aleatorio2 = random(-1 * angle * angle_chaos, angle * angle_chaos);
 
 class LSystem
 {
@@ -67,13 +65,14 @@ class LSystem
   {
     axiom = "F";
     string = "F";
-    state = new float[3];
+    state = new float[4];
     state[0] = 0;
     state[1] = 0;
     state[2] = 0;
+    state[3] = 0;
     col = color(0, 0, 0);
     rule = default_rule;
-    state_stack = new float[4096][3];
+    state_stack = new float[4096][4];
   }
   
   void iterate ()
@@ -128,31 +127,33 @@ class LSystem
     switch (c)
     {
           case 'F':
-            float ext_this = extension + aleatorio ;
+            float ext_this = extension + random(-1.0 * extension * extension_chaos, extension * extension_chaos);
             float x_delta = ext_this * sin(state[2]);
             float y_delta = ext_this * cos(state[2]);
+            float z_delta = ext_this * random(-PI/4, PI/4);
 
 
             stroke(col);
-            strokeWeight(0.5);
+            strokeWeight(1);
             //stroke(random(255), random(255), random(255), 230);
 
-            line(state[0], state[1], 0, state[0] + x_delta, state[1] + y_delta, PI);
+            line(state[0], state[1], state[3], state[0] + x_delta, state[1] + y_delta, state[3]+z_delta);
             state[0] += x_delta;
             state[1] += y_delta;
-            
+            state[3] += z_delta;
+            /*
             if (default_draw_tips)
             {
                 strokeWeight(0.5);
-                line(state[0], state[1], 0, state[0] + 0.1, state[1] + 0.1, PI);
+                line(state[0], state[1], state[3], state[0] + 0.1, state[1] + 0.1, state[3]+z_delta);
             }
-
+*/
             break;
           case '-':
-            state[2] -= (angle + aleatorio2);
+            state[2] -= (angle + random(-1 * angle * angle_chaos, angle * angle_chaos));
             break;
           case '+':
-            state[2] += (angle + aleatorio2);
+            state[2] += (angle + random(-1 * angle * angle_chaos, angle * angle_chaos));
             break;
           case '[':
             arraycopy(state, state_stack[stack_size++]);
@@ -169,6 +170,7 @@ class LSystem
 void setup ()
 {
   int iterations = default_iterations;
+  seed = year()*month()*day()*hour()*minute()*second()*millis();
 
   size(1300, 900, P3D);
   background(250);
@@ -187,6 +189,7 @@ void setup ()
 
 void draw ()
 {
+  randomSeed(seed);
   int iterations = default_iterations;
   system = new LSystem();
   system.iterate(iterations);
