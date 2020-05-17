@@ -36,8 +36,16 @@ int     default_y_offset = 400;
 boolean default_draw_tips = true;
 
 String  default_filename = "iterations-0.pdf";
+  float zoom, desp;
 
 LSystem system;
+
+float angle = default_angle;
+float angle_chaos = default_angle_chaos;
+float extension = default_extension;
+float extension_chaos = default_extension_chaos;
+float aleatorio = random(-1.0 * extension * extension_chaos, extension * extension_chaos);
+float aleatorio2 = random(-1 * angle * angle_chaos, angle * angle_chaos);
 
 class LSystem
 {
@@ -51,11 +59,9 @@ class LSystem
   int pos = 0;
   color col;
   
-  float angle = default_angle;
-  float angle_chaos = default_angle_chaos;
-  float extension = default_extension;
-  float extension_chaos = default_extension_chaos;
+
   
+ 
   LSystem ()
   {
     axiom = "F";
@@ -98,16 +104,17 @@ class LSystem
   
   void draw()
   {
-      beginRecord(PDF, default_filename);
+     // beginRecord(PDF, default_filename);
       translate(100, default_y_offset);
       rotate(1.5 * PI);
+      
       strokeWeight(0.5);
 
       for (int i = 0; i < string.length(); i++)
       {
         this.drawSegment();
       }
-      
+     //camera(mouseX, mouseY, zoom, desp, height/2, -PI/6, 0, 1, 0);
       endRecord();
   }
   
@@ -120,30 +127,31 @@ class LSystem
     switch (c)
     {
           case 'F':
-            float ext_this = extension + random(-1.0 * extension * extension_chaos, extension * extension_chaos);
+            float ext_this = extension + aleatorio ;
             float x_delta = ext_this * sin(state[2]);
             float y_delta = ext_this * cos(state[2]);
 
+
             stroke(col);
             strokeWeight(0.5);
-            // stroke(random(255), random(255), random(255), 230);
+            //stroke(random(255), random(255), random(255), 230);
 
-            line(state[0], state[1], state[0] + x_delta, state[1] + y_delta);
+            line(state[0], state[1], 0, state[0] + x_delta, state[1] + y_delta, PI);
             state[0] += x_delta;
             state[1] += y_delta;
             
             if (default_draw_tips)
             {
                 strokeWeight(0.5);
-                line(state[0], state[1], state[0] + 0.1, state[1] + 0.1);
+                line(state[0], state[1], 0, state[0] + 0.1, state[1] + 0.1, PI);
             }
 
             break;
           case '-':
-            state[2] -= (angle + random(-1 * angle * angle_chaos, angle * angle_chaos));
+            state[2] -= (angle + aleatorio2);
             break;
           case '+':
-            state[2] += (angle + random(-1 * angle * angle_chaos, angle * angle_chaos));
+            state[2] += (angle + aleatorio2);
             break;
           case '[':
             arraycopy(state, state_stack[stack_size++]);
@@ -155,33 +163,65 @@ class LSystem
     
     pos++;
   }
-}
+} //CLASS LSYSTEM
 
 void setup ()
 {
   int iterations = default_iterations;
 
-  size(1300, 900);
+  size(1300, 900, P3D);
   background(250);
   frameRate(50);
   smooth();
   system = new LSystem();
   system.iterate(iterations);
   
-  system.draw();
+          zoom = height/2;
+        desp = width/2;
+  
+  //translate(width/2,0);
+
+  //system.draw();
 }
 
-void _draw ()
+void draw ()
 {
+  int iterations = default_iterations;
+  system = new LSystem();
+  system.iterate(iterations);
+  
   // To draw segment by segment, rename this routine to draw()
   // and remove system.draw() from setup().
-  translate(100, default_y_offset);
+
+  background(240,240,240);
+  sphere(100);
+  
+  translate(100, height);
   rotate(1.5 * PI);
 
   system.draw();
   for (int i = 0; i < random(10, 50); i++)
   {
-    system.drawSegment();
+    //system.drawSegment();
   }
-}
 
+  //Camara
+
+       if (keyPressed) {
+          println("Tecla pulsada "+key);
+        if (key == 's'){
+          zoom += 10;
+        }
+        else if(key == 'w') 
+          zoom -= 10;
+        else if(key == 'a') 
+          desp -= 10;
+        else if(key == 'd') 
+          desp += 10;
+    
+       }
+
+    camera(mouseX, mouseY, zoom, desp, height/2, -PI/6, 0, 1, 0);
+
+  
+}
