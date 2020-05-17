@@ -23,7 +23,8 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
  */
- 
+
+int seed;
 String default_rule = "F[+F]F[-F]";
 
 int    default_iterations = 5;
