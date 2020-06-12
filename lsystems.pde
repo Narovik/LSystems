@@ -37,7 +37,6 @@ int     default_y_offset = 400;
 boolean default_draw_tips = true;
 
 String  default_filename = "iterations-0.pdf";
-  float zoom, desp;
 
 LSystem system;
 
@@ -45,6 +44,12 @@ float angle = default_angle;
 float angle_chaos = default_angle_chaos;
 float extension = default_extension;
 float extension_chaos = default_extension_chaos;
+
+// Camara
+float angulo = PI/2;
+float distancia = 700;
+float posicionY = 0;
+float posicionX = 0;
 
 class LSystem
 {
@@ -179,9 +184,6 @@ void setup ()
   system = new LSystem();
   system.iterate(iterations);
   
-          zoom = height/2;
-        desp = width/2;
-  
   //translate(width/2,0);
 
   //system.draw();
@@ -198,10 +200,8 @@ void draw ()
   // and remove system.draw() from setup().
 
   background(240,240,240);
-  sphere(100);
-  
-  translate(100, height);
-  rotate(1.5 * PI);
+  rotate(-0.5 * PI);
+  translate(-500,-400,0);
 
   system.draw();
   for (int i = 0; i < random(10, 50); i++)
@@ -212,20 +212,34 @@ void draw ()
   //Camara
 
        if (keyPressed) {
-          println("Tecla pulsada "+key);
-        if (key == 's'){
-          zoom += 10;
+        if (key == 's' || key == 'S'){          
+          distancia += 10;
+        }else if(key == 'w' || key == 'W'){ 
+          distancia -= 10;
+        }else if(key == 'a' || key == 'A'){
+          angulo -= PI/100;
+        }else if(key == 'd' || key == 'D'){ 
+          angulo += PI/100;
+        }else if(key == 'r' || key == 'R'){
+          angulo = PI/2;
+          posicionY = 0;
+          distancia = 700;
+          posicionX = 0;
+        }else if(key == CODED){
+          if(keyCode == UP){
+            posicionY -= 2;
+          }else if(keyCode == DOWN){
+            posicionY += 2;
+          }else if(keyCode == LEFT){
+            posicionX -= 2;
+          }else if(keyCode == RIGHT){
+            posicionX += 2;
+          }
         }
-        else if(key == 'w') 
-          zoom -= 10;
-        else if(key == 'a') 
-          desp -= 10;
-        else if(key == 'd') 
-          desp += 10;
-    
+        
        }
 
-    camera(mouseX, mouseY, zoom, desp, height/2, -PI/6, 0, 1, 0);
+    camera(cos(angulo)*distancia + posicionX ,posicionY, sin(angulo)*distancia, posicionX, posicionY, 0, 0, 1, 0);
 
   
 }
