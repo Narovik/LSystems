@@ -1,11 +1,11 @@
 // Camara
-  float angulo = 0; // angulo inicial de la camara, usado para girar alrededor del objeto
-  float distancia = 400; // distancia inicial base del objeto a la camara 
-  float posicionY = -50; // posicion inicial de la camara en el espacio
+  float angulo = PI/2; // angulo inicial de la camara, usado para girar alrededor del objeto
+  float distancia = 1000; // distancia inicial base del objeto a la camara 
+  float posicionY = -200; // posicion inicial de la camara en el espacio
   float posicionX = 0;
 
 // Parametros del arbol
-  int iteraciones_del_dibujado = 2;
+  int iteraciones_del_dibujado = 3;
   int seed;
   String default_rule;
   
@@ -20,6 +20,7 @@
  int niveles = 10;
  
  PShape nudos[] = new PShape[10]; // Array de uniones entre segmentos del arbol (ramas)
+ PShape hoja;
   
 void setup (){
   
@@ -47,7 +48,7 @@ void setup (){
     imgHoja = loadImage("Textures/leaf.jpg");
     imgTronco = loadImage("Textures/tree.jpg");
     imgNudo = loadImage("Textures/knot.jpg");
-    
+   
       
   int vectorPesos[] = {5,4,3,2,1,0};  
     
@@ -58,8 +59,9 @@ void setup (){
       nudos[i].setTexture(imgNudo);
     }
     
-   
-   
+   noStroke();
+   hoja = createShape(ELLIPSE, 0, 0, 10, 25);
+   hoja.setTexture(imgHoja);
 }
 
 void draw ()
@@ -69,7 +71,7 @@ void draw ()
   
   // Establece la semilla del random
     randomSeed(seed);
-  
+    
   // Función que dibuja el arbol
     system.draw();
     
@@ -103,7 +105,6 @@ void draw ()
     
   // Camara
     camera(cos(angulo)*distancia + posicionX ,posicionY, sin(angulo)*distancia, posicionX, posicionY, 0, 0, 1, 0);
-
   
 }
 
@@ -208,41 +209,49 @@ void dibujarRama(float x1, float y1, float z1,float x2, float y2, float z2, int 
 
 void dibujarHoja(float x1, float y1, float z1, float anchoHoja)
 {
-  color strokeColour = color(124,60,0);
+  //color strokeColour = color(124,60,0);
   
-  float x2 = x1+15;
-  float y2 = y1+15;
-  float z2 = z1+15;
+  //float x2 = x1+15;
+  //float y2 = y1+15;
+  //float z2 = z1+15;
 
-  PVector p1 = new PVector(x1, y1, z1);
+  //PVector p1 = new PVector(x1, y1, z1);
 
-  PVector p2 = new PVector(x2, y2, z2);
+  //PVector p2 = new PVector(x2, y2, z2);
 
-  PVector v1 = new PVector(x2-x1, y2-y1, z2-z1);
+  //PVector v1 = new PVector(x2-x1, y2-y1, z2-z1);
 
-  float rho = sqrt(pow(v1.x,2)+pow(v1.y,2)+pow(v1.z,2));
+  //float rho = sqrt(pow(v1.x,2)+pow(v1.y,2)+pow(v1.z,2));
 
-  float phi = acos(v1.z/rho);
+  //float phi = acos(v1.z/rho);
 
-  float the = atan2(v1.y,v1.x);
+  //float the = atan2(v1.y,v1.x);
 
-  v1.mult(0.5);
+  //v1.mult(0.5);
 
- 
 
   pushMatrix();
 
-  translate(x1,y1,z1);
+  translate(x1,y1+10,z1);
+  
+  rotateY(random(2*PI));
+  
+  shape(hoja);
+  
+  
+  
 
+  
+  //shape(hoja);
   // normally just   translate(v1.x, v1.y, v1.z);
 
-  translate(v1.x, v1.y, v1.z);
+  //translate(v1.x, v1.y, v1.z);
 
   //rotateZ(the);
 
   //rotateY(phi);
 
-  noStroke();
+  //noStroke();
 
   //fill(0,240,0);
 
@@ -252,7 +261,7 @@ void dibujarHoja(float x1, float y1, float z1, float anchoHoja)
   
   //PShape hoja = createShape(ELLIPSE, x1, y1+10, anchoHoja, anchoHoja*2);
   //hoja.setTexture(imgHoja);
-  //shape(hoja);
+ 
   
  
 
