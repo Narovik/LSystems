@@ -1,5 +1,5 @@
 // Camara
-  float angulo = PI/2; // angulo inicial de la camara, usado para girar alrededor del objeto
+  float angulo = -PI/2; // angulo inicial de la camara, usado para girar alrededor del objeto
   float distancia = 1000; // distancia inicial base del objeto a la camara 
   float posicionY = -200; // posicion inicial de la camara en el espacio
   float posicionX = 0;
@@ -28,7 +28,7 @@ void setup (){
     seed = year()*month()*day()*hour()*minute()*second()*millis();
     
   // Regla por defecto para generar el arbol
-    default_rule = "F[+F-F]F[-F+F]";
+    default_rule = "F[+F-F]F[-F-F]";
     
   // Tamaño y tipo de ventana
     size(1300, 900, P3D);
@@ -50,7 +50,7 @@ void setup (){
     imgNudo = loadImage("Textures/knot.jpg");
    
       
-  int vectorPesos[] = {5,4,3,2,1,0};  
+  int vectorPesos[] = {10,6,4,2,1,0}; 
     
     for(int i = 0; i < 5; i++)
     {
@@ -60,7 +60,7 @@ void setup (){
     }
     
    noStroke();
-   hoja = createShape(ELLIPSE, 0, 0, 10, 25);
+   hoja = createShape(QUAD, 0, 0, 5, 4, 0, random(20)+120 , - 5, 3);
    hoja.setTexture(imgHoja);
 }
 
@@ -176,7 +176,7 @@ void dibujarRama(float x1, float y1, float z1,float x2, float y2, float z2, int 
 
   translate(x1,y1,z1);
   
-  int vectorPesos[] = {5,4,3,2,1,0};  // Grosores segun nivel
+  int vectorPesos[] = {10,6,4,2,1,0};  // Grosores segun nivel
   
   shape(nudos[nivel]); // Nudo en la rama
   
@@ -229,13 +229,10 @@ void dibujarHoja(float x1, float y1, float z1, float anchoHoja)
 
   //v1.mult(0.5);
 
-
   pushMatrix();
 
-  translate(x1,y1+10,z1);
-  
-  rotateY(random(2*PI));
-  
+  translate(x1,y1+2,z1);
+ 
   shape(hoja);
   
   
