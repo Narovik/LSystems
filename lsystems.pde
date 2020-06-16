@@ -4,6 +4,7 @@ import uibooster.model.*;
 import uibooster.model.formelements.*;
 import uibooster.utils.*;
 
+
 // Camara
   float angulo = -PI/2; // angulo inicial de la camara, usado para girar alrededor del objeto
   float distancia = 1000; // distancia inicial base del objeto a la camara 
@@ -13,8 +14,19 @@ import uibooster.utils.*;
 // Parametros del arbol
   int iteraciones_del_dibujado = 3;
   int seed;
-  String default_rule;
   
+
+  float  default_angle = PI / 8;
+  float  default_extension = 35;
+  float  default_extension_chaos = 0.5;
+  float angle = default_angle;
+  float extension = default_extension;
+  float extension_chaos = default_extension_chaos;
+  
+  int numDivisiones=5; // Divisones del segmento para pintar hojas
+      
+  // Regla por defecto para generar el arbol
+   String default_rule = "F[+F-F[-F]]F[-F-F[-F]]";
 // Texturas
   PImage imgHoja;
   PImage imgTronco;
@@ -26,33 +38,89 @@ import uibooster.utils.*;
   
  int niveles = 10;
  
- PShape nudos[] = new PShape[10]; // Array de uniones entre segmentos del arbol (ramas)
+ int vectorPesos[] = {10,6,6,5,5,4,4,3,2,1,0}; 
+ 
+ PShape nudos[] = new PShape[vectorPesos.length]; // Array de uniones entre segmentos del arbol (ramas)
  PShape hoja;
  PShape ground;
- int vectorPesos[] = {12,8,6,5,4,3,2,1,0}; 
- 
+
+
 // Interfaz
 
 UiBooster GUI;
+
+void interfaz()
+{
+   // Interfaz
+    new UiBooster().createForm("Parámetros")
+       
+    .addSlider("Iteraciones", 1, 5, 3, 1, 5)
+    
+     .addSlider("Extension", 0, 70, 35, 10, 70)
+     
+     .addSlider("Extension chaos", 0, 100, 50, 10, 100)
+     
+     .addSlider("Ángulo", 0, 360, 22, 60, 360)
+     
+     .addSlider("Población hojas", 2, 10, 2, 2, 10)
+    
+    .addSelection("Modelos propuestos", "F[+F-F[-F]]F[-F-F[-F]]", "F[+F-F[-F]]", "F[+F-F]")
+    
+    .addButton("Reiniciar",new Runnable(){ public void run(){ extension=default_extension; extension_chaos=default_extension_chaos; angle=default_angle; iteraciones_del_dibujado=3; default_rule="F[+F-F[-F]]F[-F-F[-F]]"; } })
+    
+    .addButton("Dibujar",new Runnable(){ public void run(){ system=new LSystem(); system.iterate(iteraciones_del_dibujado); } })
+    
+    .setChangeListener(new FormElementChangeListener() {
+
+      public void onChange(FormElement element, Object value) {
+
+        if(element.getLabel().equals("Iteraciones")) {
+          iteraciones_del_dibujado = element.asInt();
+          println(iteraciones_del_dibujado);
+        }
+        
+        if(element.getLabel().equals("Extension")) {
+          extension = element.asInt();
+          println("Extension cambiada a " + extension);
+        }
+                
+        if(element.getLabel().equals("Extension chaos")) {
+          extension_chaos = element.asInt() / 100.0;
+          println("Extension chaos cambiado a " + extension_chaos);
+        }
+        
+        if(element.getLabel().equals("Ángulo")) {
+          angle = element.asInt();
+          println("Ángulo cambiado a " + angle);
+        }
+        
+        if(element.getLabel().equals("Población hojas")) {
+          numDivisiones = element.asInt();
+          println("Num divisiones cambiado a " + numDivisiones);
+        }
+        
+        if(element.getLabel().equals("Modelos propuestos")) {
+          default_rule=element.asString();
+          // system=new LSystem(); system.iterate(iteraciones_del_dibujado);
+          println("Regla de produccion cambiada a " + element.asString());
+        }
+        
+      }
+    })
+    
+    .run();
+  
+}
+  
   
 void setup (){
-  
-  // Interfaz
-    GUI = new UiBooster();
-  
-  // Relleno de la interfaz
-    FilledForm form = GUI.createForm("Personal information")
-            .addText("Whats your first name?")
-            .addTextArea("Tell me something about you")
-            .addLabel("Choose an action")
-            .addSlider("How many liters did you drink today?", 0, 5, 1, 5, 1)
-            .run();
+  surface.setTitle("LSystems - Victor M. Rodriguez - Ihar Myshkevich");
+  surface.setLocation(0, 0);
+  interfaz();
   
   // Generación de la semilla para el angulo z
     seed = year()*month()*day()*hour()*minute()*second()*millis();
-    
-  // Regla por defecto para generar el arbol
-    default_rule = "F[+F-F[-F]]F[-F-F[-F]]";
+
     
   // Tamaño y tipo de ventana
     size(1300, 900, P3D);
@@ -74,7 +142,7 @@ void setup (){
     imgNudo = loadImage("Textures/knot.jpg");
     imgGround = loadImage("Textures/ground.jpg");
     
-    for(int i = 0; i < 9; i++)
+    for(int i = 0; i < vectorPesos.length; i++)
     {
       noStroke();
       nudos[i] = createShape(SPHERE, vectorPesos[i]);
@@ -82,7 +150,7 @@ void setup (){
     }
     
    noStroke();
-   hoja = createShape(QUAD, 0, 0, 4, 4, 0, random(20)+120 , -4, 3);
+   hoja = createShape(QUAD, 0, 0, 2, 4, 0, random(20)+120 , -2, 3);
    hoja.setTexture(imgHoja);
    ground = createShape(BOX,500,10,500);
    ground.setTexture(imgGround);
@@ -93,7 +161,7 @@ void draw ()
   
   // Se reinicia el color de fondo
      background(240,240,240);
-     
+    
   // Establece la semilla del random
     randomSeed(seed);
     
@@ -256,9 +324,10 @@ void dibujarHoja(float x1, float y1, float z1, float anchoHoja)
   //v1.mult(0.5);
 
   pushMatrix();
-
+  // Posicionar la hoja
   translate(x1,y1+2,z1);
- 
+  rotateY(random(2*PI));
+  
   shape(hoja);
   
   

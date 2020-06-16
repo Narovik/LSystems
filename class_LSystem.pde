@@ -24,16 +24,12 @@
 
  */
 
-float  default_angle = PI / 8;
-float  default_extension = 35;
-float  default_extension_chaos = 0.5;
+
 
 int     default_y_offset = 400;
 boolean default_draw_tips = true;
 
-float angle = default_angle;
-float extension = default_extension;
-float extension_chaos = default_extension_chaos;
+
 
 class LSystem
 {
@@ -139,13 +135,21 @@ class LSystem
              dibujarRama(inicio.x, inicio.y, inicio.z, fin.x, fin.y, fin.z, stack_size, false);
             
           
-            
             if(pos>3){
               dibujarHoja(fin.x, fin.y, fin.z, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
               dibujarHoja(inicio.x, inicio.y, inicio.z, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
-              dibujarHoja((inicio.x+fin.x)/2, (inicio.y+fin.y)/2, (inicio.z+fin.z)/2, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
+              
+             // DIBUJAR HOJAS
+             
+             for(int i=2; i<numDivisiones; i++)
+              {
+                dibujarHoja((inicio.x+fin.x)/i, (inicio.y+fin.y)/i, (inicio.z+fin.z)/i, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
+              }
+            
                
             }
+            
+ 
             
             state[0] += x_delta;
             state[1] += y_delta;
