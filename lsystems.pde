@@ -1,3 +1,9 @@
+import uibooster.*;
+import uibooster.components.*;
+import uibooster.model.*;
+import uibooster.model.formelements.*;
+import uibooster.utils.*;
+
 // Camara
   float angulo = -PI/2; // angulo inicial de la camara, usado para girar alrededor del objeto
   float distancia = 1000; // distancia inicial base del objeto a la camara 
@@ -23,9 +29,24 @@
  PShape nudos[] = new PShape[10]; // Array de uniones entre segmentos del arbol (ramas)
  PShape hoja;
  PShape ground;
-int vectorPesos[] = {12,8,6,5,4,3,2,1,0}; 
+ int vectorPesos[] = {12,8,6,5,4,3,2,1,0}; 
+ 
+// Interfaz
+
+UiBooster GUI;
   
 void setup (){
+  
+  // Interfaz
+    GUI = new UiBooster();
+  
+  // Relleno de la interfaz
+    FilledForm form = GUI.createForm("Personal information")
+            .addText("Whats your first name?")
+            .addTextArea("Tell me something about you")
+            .addLabel("Choose an action")
+            .addSlider("How many liters did you drink today?", 0, 5, 1, 5, 1)
+            .run();
   
   // Generación de la semilla para el angulo z
     seed = year()*month()*day()*hour()*minute()*second()*millis();
