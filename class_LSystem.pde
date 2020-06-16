@@ -31,8 +31,6 @@ float  default_extension_chaos = 0.5;
 int     default_y_offset = 400;
 boolean default_draw_tips = true;
 
-LSystem system;
-
 float angle = default_angle;
 float extension = default_extension;
 float extension_chaos = default_extension_chaos;
@@ -61,7 +59,6 @@ class LSystem
     state[1] = 0;
     state[2] = 0;
     state[3] = 0;
-    col = color(0, 0, 0);
     rule = default_rule;
     state_stack = new float[4096][4];
   }
@@ -95,7 +92,14 @@ class LSystem
   
   void draw()
   {
-      strokeWeight(0.5);
+      pos = 0;
+      state = new float[4];
+      state[0] = 0;
+      state[1] = 0;
+      state[2] = 0;
+      state[3] = 0;
+      rule = default_rule;
+      state_stack = new float[4096][4];
       for (int i = 0; i < string.length(); i++)
       {
         this.drawSegment();
@@ -124,11 +128,6 @@ class LSystem
               y_delta = -ext_this * cos(state[2]);
               
             }
-
-            //stroke(col);
-            //strokeWeight(1);
-
-             //translate(state[0],state[1],state[3]);
             
             PVector inicio = new PVector(state[0], state[1], state[3]);
             PVector fin = new PVector(state[0] + x_delta, state[1] + y_delta, state[3]+z_delta);
@@ -139,22 +138,16 @@ class LSystem
             color verde = color(10,240,20);
             int anchoHoja = 10;
             
-            //drawCylinder(10, 10, 5, inicio, fin);
-            
             dibujarRama(inicio.x, inicio.y, inicio.z, fin.x, fin.y, fin.z, ancho);
+            
             
             if(pos>3){
               dibujarHoja(fin.x, fin.y, fin.z, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
               dibujarHoja(inicio.x, inicio.y, inicio.z, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
               dibujarHoja((inicio.x+fin.x)/2, (inicio.y+fin.y)/2, (inicio.z+fin.z)/2, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
-             
-              
+               
             }
             
-            
-            //translate(-state[0],-state[1],-state[3]);
-            
-            //line(state[0], state[1], state[3], state[0] + x_delta, state[1] + y_delta, state[3]+z_delta);
             state[0] += x_delta;
             state[1] += y_delta;
             state[3] += z_delta;

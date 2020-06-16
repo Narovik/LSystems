@@ -10,8 +10,11 @@
   String default_rule;
   
 // Texturas
-PImage imgHoja;
-PImage imgTronco;
+  PImage imgHoja;
+  PImage imgTronco;
+  
+// L-System
+  LSystem system;
   
 void setup (){
   
@@ -30,6 +33,12 @@ void setup (){
   // Dibujado en el espacio con anti-aliased
     smooth();
     
+  // LSystem
+    system = new LSystem();
+    
+  // llamada a las iteraciones
+    system.iterate(iteraciones_del_dibujado);
+ 
     imgHoja = loadImage("Textures/leaf.jpg");
     imgTronco = loadImage("Textures/tree.jpg");
 }
@@ -41,12 +50,6 @@ void draw ()
   
   // Establece la semilla del random
     randomSeed(seed);
-    
-  // Generación de una nueva clase de LSystem
-    system = new LSystem();
-  
-  // Se llama a la función que generara los datos encesarios para dibujar el arbol
-    system.iterate(iteraciones_del_dibujado);
   
   // Función que dibuja el arbol
     system.draw();
