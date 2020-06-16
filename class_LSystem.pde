@@ -54,13 +54,7 @@ class LSystem
   {
     axiom = "F";
     string = "F";
-    state = new float[4];
-    state[0] = 0;
-    state[1] = 0;
-    state[2] = 0;
-    state[3] = 0;
     rule = default_rule;
-    state_stack = new float[4096][4];
   }
   
   void iterate ()
@@ -93,13 +87,14 @@ class LSystem
   void draw()
   {
       pos = 0;
-      state = new float[4];
+      state = new float[5];
       state[0] = 0;
       state[1] = 0;
       state[2] = 0;
       state[3] = 0;
+      state[4] = 1;
       rule = default_rule;
-      state_stack = new float[4096][4];
+      state_stack = new float[4096][5];
       for (int i = 0; i < string.length(); i++)
       {
         this.drawSegment();
@@ -117,7 +112,7 @@ class LSystem
     {
           case 'F':
                       
-            float ext_this = extension + random(-1.0 * extension * extension_chaos, extension * extension_chaos);
+            float ext_this = extension/state[4] + random(-1.0 * extension * extension_chaos, extension * extension_chaos);
             float x_delta = ext_this * sin(state[2]);
             float y_delta = -ext_this * cos(state[2]); // se pone la y negativa para que crezca hacia arriba
             float z_delta = ext_this * random(-PI/4, PI/4);
@@ -134,8 +129,6 @@ class LSystem
             float ancho = 2;
             if(pos==0) ancho = 4;
             
-            color marron = color(124,60,0);
-            color verde = color(10,240,20);
             int anchoHoja = 10;
             
             dibujarRama(inicio.x, inicio.y, inicio.z, fin.x, fin.y, fin.z, ancho);
@@ -161,6 +154,7 @@ class LSystem
             break;
           case '[':
             arrayCopy(state, state_stack[stack_size++]);
+            state[4]++;
             break;
           case ']':
             arrayCopy(state_stack[--stack_size], state);

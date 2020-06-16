@@ -149,9 +149,9 @@ void dibujarRama(float x1, float y1, float z1,float x2, float y2, float z2,float
  
 
   pushMatrix();
-
+  fill(139,69,19);
   translate(x1,y1,z1);
-
+  sphere(2);
   // normally just   translate(v1.x, v1.y, v1.z);
 
   translate(v1.x, v1.y, v1.z);
@@ -162,8 +162,7 @@ void dibujarRama(float x1, float y1, float z1,float x2, float y2, float z2,float
 
   noStroke();
 
-  fill(139,69,19);
-  drawCylinder( 10, 2, 5, p1.dist(p2)*1.2);
+  drawCylinder( 10, 2, 2, p1.dist(p2));
   //box(weight,weight,p1.dist(p2)*1.2);
   /*
   PShape rama = createShape(BOX, weight,weight,p1.dist(p2)*1.2);
@@ -179,35 +178,35 @@ void dibujarRama(float x1, float y1, float z1,float x2, float y2, float z2,float
 
 void dibujarHoja(float x1, float y1, float z1, float anchoHoja)
 {
-  //color strokeColour = color(124,60,0);
+  color strokeColour = color(124,60,0);
   
-  //float x2 = x1+weight;
-  //float y2 = y1+weight;
-  //float z2 = z1+weight;
+  float x2 = x1+15;
+  float y2 = y1+15;
+  float z2 = z1+15;
 
-  //PVector p1 = new PVector(x1, y1, z1);
+  PVector p1 = new PVector(x1, y1, z1);
 
-  //PVector p2 = new PVector(x2, y2, z2);
+  PVector p2 = new PVector(x2, y2, z2);
 
-  //PVector v1 = new PVector(x2-x1, y2-y1, z2-z1);
+  PVector v1 = new PVector(x2-x1, y2-y1, z2-z1);
 
-  //float rho = sqrt(pow(v1.x,2)+pow(v1.y,2)+pow(v1.z,2));
+  float rho = sqrt(pow(v1.x,2)+pow(v1.y,2)+pow(v1.z,2));
 
-  //float phi = acos(v1.z/rho);
+  float phi = acos(v1.z/rho);
 
-  //float the = atan2(v1.y,v1.x);
+  float the = atan2(v1.y,v1.x);
 
-  //v1.mult(0.5);
+  v1.mult(0.5);
 
  
 
   pushMatrix();
 
-  //translate(x1,y1,z1);
+  translate(x1,y1,z1);
 
   // normally just   translate(v1.x, v1.y, v1.z);
 
-  //translate(v1.x, v1.y, v1.z);
+  translate(v1.x, v1.y, v1.z);
 
   //rotateZ(the);
 
@@ -215,12 +214,12 @@ void dibujarHoja(float x1, float y1, float z1, float anchoHoja)
 
   noStroke();
 
-  //fill(strokeColour);
+  fill(0,240,0);
 
-  // box(weight,weight,p1.dist(p2)*1.2);
+  //box(15,15,p1.dist(p2)*1.2);
   
   //translate(0,0,z1);   
-  //ellipse(x1,y1+10,30,30);
+  
   //PShape hoja = createShape(ELLIPSE, x1, y1+10, anchoHoja, anchoHoja*2);
   //hoja.setTexture(imgHoja);
   //shape(hoja);
