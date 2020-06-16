@@ -13,6 +13,7 @@
   PImage imgHoja;
   PImage imgTronco;
   PImage imgNudo;
+  PImage imgGround;
   
 // L-System
   LSystem system;
@@ -21,6 +22,8 @@
  
  PShape nudos[] = new PShape[10]; // Array de uniones entre segmentos del arbol (ramas)
  PShape hoja;
+ PShape ground;
+int vectorPesos[] = {12,8,6,5,4,3,2,1,0}; 
   
 void setup (){
   
@@ -28,13 +31,13 @@ void setup (){
     seed = year()*month()*day()*hour()*minute()*second()*millis();
     
   // Regla por defecto para generar el arbol
-    default_rule = "F[+F-F]F[-F-F]";
+    default_rule = "F[+F-F[-F]]F[-F-F[-F]]";
     
   // Tamaño y tipo de ventana
     size(1300, 900, P3D);
   
   // Tasa de refresco
-    frameRate(50);
+    frameRate(60);
   
   // Dibujado en el espacio con anti-aliased
     smooth();
@@ -45,14 +48,12 @@ void setup (){
   // llamada a las iteraciones
     system.iterate(iteraciones_del_dibujado);
  
-    imgHoja = loadImage("Textures/leaf.jpg");
+    imgHoja = loadImage("Textures/leaf1.jpg");
     imgTronco = loadImage("Textures/tree.jpg");
     imgNudo = loadImage("Textures/knot.jpg");
-   
-      
-  int vectorPesos[] = {10,6,4,2,1,0}; 
+    imgGround = loadImage("Textures/ground.jpg");
     
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < 9; i++)
     {
       noStroke();
       nudos[i] = createShape(SPHERE, vectorPesos[i]);
@@ -60,21 +61,27 @@ void setup (){
     }
     
    noStroke();
-   hoja = createShape(QUAD, 0, 0, 5, 4, 0, random(20)+120 , - 5, 3);
+   hoja = createShape(QUAD, 0, 0, 4, 4, 0, random(20)+120 , -4, 3);
    hoja.setTexture(imgHoja);
+   ground = createShape(BOX,500,10,500);
+   ground.setTexture(imgGround);
 }
 
 void draw ()
 {
+  
   // Se reinicia el color de fondo
      background(240,240,240);
-  
+     
   // Establece la semilla del random
     randomSeed(seed);
     
   // Función que dibuja el arbol
     system.draw();
-    
+  
+  // ground drawing
+    translate(0,10,0);
+    shape(ground);    
   // Actualización de la posición de la camara en función de las teclas pulsadas
     if (keyPressed) {
       if (key == 's' || key == 'S'){          
@@ -175,8 +182,6 @@ void dibujarRama(float x1, float y1, float z1,float x2, float y2, float z2, int 
   pushMatrix();
 
   translate(x1,y1,z1);
-  
-  int vectorPesos[] = {10,6,4,2,1,0};  // Grosores segun nivel
   
   shape(nudos[nivel]); // Nudo en la rama
   

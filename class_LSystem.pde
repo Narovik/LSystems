@@ -115,7 +115,8 @@ class LSystem
             float ext_this = extension/state[4] + random(-1.0 * extension * extension_chaos, extension * extension_chaos);
             float x_delta = ext_this * sin(state[2]);
             float y_delta = -ext_this * cos(state[2]); // se pone la y negativa para que crezca hacia arriba
-            float z_delta = ext_this * random(-PI/4, PI/4);
+            float z_delta;
+              z_delta = ext_this * random(-PI/2, PI/2);
             
             if(pos==0){
               ext_this = 100;
