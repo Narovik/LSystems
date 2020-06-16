@@ -88,18 +88,16 @@ void draw ()
   
 }
 
-  void drawCylinder( int sides, float r1, float r2, PVector inicio, PVector fin)
+  void drawCylinder( int sides, float r1, float r2, float h)
 {
     float angle = 360 / sides;
-    float h = inicio.dist(fin);
     float halfHeight = h / 2;
     // top
     beginShape();
     for (int i = 0; i < sides; i++) {
-        //translate(inicio.x,inicio.y,inicio.z);
         float x = cos( radians( i * angle ) ) * r1;
         float y = sin( radians( i * angle ) ) * r1;
-        vertex( x, halfHeight, -y);
+        vertex( x, -y, halfHeight);
     }
     endShape(CLOSE);
     // bottom
@@ -108,7 +106,7 @@ void draw ()
         //translate(fin.x,fin.y,fin.z);
         float x = cos( radians( i * angle ) ) * r2;
         float y = sin( radians( i * angle ) ) * r2;
-        vertex( x, -halfHeight, -y);
+        vertex( x, -y, -halfHeight);
     }
     endShape(CLOSE);
     // draw body
@@ -118,8 +116,8 @@ void draw ()
         float y1 = sin( radians( i * angle ) ) * r1;
         float x2 = cos( radians( i * angle ) ) * r2;
         float y2 = sin( radians( i * angle ) ) * r2;
-        vertex( x1, halfHeight, -y1);
-        vertex( x2, -halfHeight, -y2);
+        vertex( x1, -y1, halfHeight);
+        vertex( x2, -y2, -halfHeight);
     }
     endShape(CLOSE);
 }
@@ -164,14 +162,14 @@ void dibujarRama(float x1, float y1, float z1,float x2, float y2, float z2,float
 
   noStroke();
 
-  //fill(strokeColour);
-
-  // box(weight,weight,p1.dist(p2)*1.2);
-  
+  fill(139,69,19);
+  drawCylinder( 10, 2, 5, p1.dist(p2)*1.2);
+  //box(weight,weight,p1.dist(p2)*1.2);
+  /*
   PShape rama = createShape(BOX, weight,weight,p1.dist(p2)*1.2);
   rama.setTexture(imgTronco);
   shape(rama);
-  
+  */
  
 
   popMatrix();
@@ -221,11 +219,11 @@ void dibujarHoja(float x1, float y1, float z1, float anchoHoja)
 
   // box(weight,weight,p1.dist(p2)*1.2);
   
-  translate(0,0,z1);
-  
-  PShape hoja = createShape(ELLIPSE, x1, y1+10, anchoHoja, anchoHoja*2);
-  hoja.setTexture(imgHoja);
-  shape(hoja);
+  //translate(0,0,z1);   
+  //ellipse(x1,y1+10,30,30);
+  //PShape hoja = createShape(ELLIPSE, x1, y1+10, anchoHoja, anchoHoja*2);
+  //hoja.setTexture(imgHoja);
+  //shape(hoja);
   
  
 
