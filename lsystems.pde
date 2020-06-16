@@ -114,14 +114,14 @@ void draw ()
     endShape(CLOSE);
 }
 
-void MyBox(float x1, float y1, float z1,float x2, float y2, float z2,float weight)
+void MyBox(float x1, float y1, float z1,float x2, float y2, float z2,float weight, color strokeColour)
 
 // was called drawLine; programmed by James Carruthers
 
 // see http://processing.org/discourse/yabb2/YaBB.pl?num=1262458611/0#9
 
 {
-  color strokeColour = color(124,60,0);
+  //color strokeColour = color(124,60,0);
 
   PVector p1 = new PVector(x1, y1, z1);
 

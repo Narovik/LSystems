@@ -108,13 +108,22 @@ class LSystem
        { return; }
     
     char c = string.charAt(pos);
+
     switch (c)
     {
           case 'F':
+                      
             float ext_this = extension + random(-1.0 * extension * extension_chaos, extension * extension_chaos);
             float x_delta = ext_this * sin(state[2]);
             float y_delta = -ext_this * cos(state[2]); // se pone la y negativa para que crezca hacia arriba
             float z_delta = ext_this * random(-PI/4, PI/4);
+            
+            if(pos==0){
+              ext_this = 100;
+              z_delta=0;
+              y_delta = -ext_this * cos(state[2]);
+              
+            }
 
             //stroke(col);
             //strokeWeight(1);
@@ -123,10 +132,23 @@ class LSystem
             
             PVector inicio = new PVector(state[0], state[1], state[3]);
             PVector fin = new PVector(state[0] + x_delta, state[1] + y_delta, state[3]+z_delta);
+            float ancho = 2;
+            if(pos==0) ancho = 3;
+            
+            color marron = color(124,60,0);
+            color verde = color(10,240,20);
+            int anchoHoja = 5;
             
             //drawCylinder(10, 10, 5, inicio, fin);
             
-            MyBox(inicio.x, inicio.y, inicio.z, fin.x, fin.y, fin.z, 2);
+            MyBox(inicio.x, inicio.y, inicio.z, fin.x, fin.y, fin.z, ancho, marron);
+            
+            if(pos>2){
+              MyBox(fin.x, fin.y, fin.z, fin.x+anchoHoja, fin.y+anchoHoja, fin.z+anchoHoja, 6, verde); // HOJA AL FINAL DEL SEGMENTO
+              MyBox(inicio.x, inicio.y, inicio.z, inicio.x+anchoHoja, inicio.y+anchoHoja, inicio.z+anchoHoja, 6, verde); // HOJA AL PRINCIPIO DEL SEGMENTO
+              MyBox((inicio.x+fin.x)/2, (inicio.y+fin.y)/2, (inicio.z+fin.z)/2, (inicio.x+fin.x)/2+anchoHoja, (inicio.y+fin.y)/2+anchoHoja, (inicio.z+fin.z)/2+anchoHoja, 6, verde);// HOJA A LA MITAD DEL SEGMENTO
+            }
+            
             
             //translate(-state[0],-state[1],-state[3]);
             
