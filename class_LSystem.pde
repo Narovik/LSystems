@@ -133,20 +133,22 @@ class LSystem
             PVector inicio = new PVector(state[0], state[1], state[3]);
             PVector fin = new PVector(state[0] + x_delta, state[1] + y_delta, state[3]+z_delta);
             float ancho = 2;
-            if(pos==0) ancho = 3;
+            if(pos==0) ancho = 4;
             
             color marron = color(124,60,0);
             color verde = color(10,240,20);
-            int anchoHoja = 5;
+            int anchoHoja = 10;
             
             //drawCylinder(10, 10, 5, inicio, fin);
             
-            MyBox(inicio.x, inicio.y, inicio.z, fin.x, fin.y, fin.z, ancho, marron);
+            dibujarRama(inicio.x, inicio.y, inicio.z, fin.x, fin.y, fin.z, ancho);
             
-            if(pos>2){
-              MyBox(fin.x, fin.y, fin.z, fin.x+anchoHoja, fin.y+anchoHoja, fin.z+anchoHoja, 6, verde); // HOJA AL FINAL DEL SEGMENTO
-              MyBox(inicio.x, inicio.y, inicio.z, inicio.x+anchoHoja, inicio.y+anchoHoja, inicio.z+anchoHoja, 6, verde); // HOJA AL PRINCIPIO DEL SEGMENTO
-              MyBox((inicio.x+fin.x)/2, (inicio.y+fin.y)/2, (inicio.z+fin.z)/2, (inicio.x+fin.x)/2+anchoHoja, (inicio.y+fin.y)/2+anchoHoja, (inicio.z+fin.z)/2+anchoHoja, 6, verde);// HOJA A LA MITAD DEL SEGMENTO
+            if(pos>3){
+              dibujarHoja(fin.x, fin.y, fin.z, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
+              dibujarHoja(inicio.x, inicio.y, inicio.z, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
+              dibujarHoja((inicio.x+fin.x)/2, (inicio.y+fin.y)/2, (inicio.z+fin.z)/2, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
+             
+              
             }
             
             
