@@ -12,14 +12,9 @@
 // Texturas
   PImage imgHoja;
   PImage imgTronco;
-  PImage imgNudo;
   
 // L-System
   LSystem system;
-  
- int niveles = 10;
- 
- PShape nudos[] = new PShape[10]; // Array de uniones entre segmentos del arbol (ramas)
   
 void setup (){
   
@@ -46,20 +41,6 @@ void setup (){
  
     imgHoja = loadImage("Textures/leaf.jpg");
     imgTronco = loadImage("Textures/tree.jpg");
-    imgNudo = loadImage("Textures/knot.jpg");
-    
-      
-  int vectorPesos[] = {5,4,3,2,1,0};  
-    
-    for(int i = 0; i < 5; i++)
-    {
-      noStroke();
-      nudos[i] = createShape(SPHERE, vectorPesos[i]);
-      nudos[i].setTexture(imgNudo);
-    }
-    
-   
-   
 }
 
 void draw ()
@@ -109,18 +90,14 @@ void draw ()
 
   void drawCylinder( int sides, float r1, float r2, float h)
 {
- 
-    textureMode(IMAGE);
     float angle = 360 / sides;
     float halfHeight = h / 2;
     // top
-    noStroke();
     beginShape();
     for (int i = 0; i < sides; i++) {
         float x = cos( radians( i * angle ) ) * r1;
         float y = sin( radians( i * angle ) ) * r1;
-        texture(imgTronco);
-        vertex( x, -y, halfHeight, i*25, 0);
+        vertex( x, -y, halfHeight);
     }
     endShape(CLOSE);
     // bottom
@@ -129,8 +106,7 @@ void draw ()
         //translate(fin.x,fin.y,fin.z);
         float x = cos( radians( i * angle ) ) * r2;
         float y = sin( radians( i * angle ) ) * r2;
-        texture(imgTronco);
-        vertex( x, -y, -halfHeight, i*25, 100);
+        vertex( x, -y, -halfHeight);
     }
     endShape(CLOSE);
     // draw body
@@ -140,14 +116,13 @@ void draw ()
         float y1 = sin( radians( i * angle ) ) * r1;
         float x2 = cos( radians( i * angle ) ) * r2;
         float y2 = sin( radians( i * angle ) ) * r2;
-        texture(imgTronco);
-        vertex( x1, -y1, halfHeight, i*25, 0);
-        vertex( x2, -y2, -halfHeight, i*25, 100);
+        vertex( x1, -y1, halfHeight);
+        vertex( x2, -y2, -halfHeight);
     }
     endShape(CLOSE);
 }
 
-void dibujarRama(float x1, float y1, float z1,float x2, float y2, float z2, int nivel, boolean fin_rama)
+void dibujarRama(float x1, float y1, float z1,float x2, float y2, float z2, int nivel)
 
 // was called drawLine; programmed by James Carruthers
 
@@ -171,14 +146,14 @@ void dibujarRama(float x1, float y1, float z1,float x2, float y2, float z2, int 
 
   v1.mult(0.5);
 
+ 
+
   pushMatrix();
 
   translate(x1,y1,z1);
-  
-  int vectorPesos[] = {5,4,3,2,1,0};  // Grosores segun nivel
-  
-  shape(nudos[nivel]); // Nudo en la rama
-  
+  sphere(2); // Uniones de las ramas
+
+  // normally just   translate(v1.x, v1.y, v1.z);
 
   translate(v1.x, v1.y, v1.z);
 
@@ -187,12 +162,15 @@ void dibujarRama(float x1, float y1, float z1,float x2, float y2, float z2, int 
   rotateY(phi);
 
   noStroke();
-   
-  if(fin_rama) // La rama termina en una punta variable
-    drawCylinder( 10, random(2), vectorPesos[nivel], p1.dist(p2));
-   else
-    drawCylinder( 10, vectorPesos[nivel], vectorPesos[nivel]+1, p1.dist(p2));
-  
+
+  fill(139,69,19);
+  //if(nivel < 1 ) drawCylinder( 10, 2, 4, p1.dist(p2)); //Nudo de la rama
+  //else{
+    int vectorPesos[] = {5,4,3,2,1,0};
+    
+    drawCylinder( 10, nivel+vectorPesos[nivel], nivel+vectorPesos[nivel]+1 , p1.dist(p2));
+    
+  //}
   //box(weight,weight,p1.dist(p2)*1.2);
   /*
   PShape rama = createShape(BOX, weight,weight,p1.dist(p2)*1.2);
@@ -208,35 +186,35 @@ void dibujarRama(float x1, float y1, float z1,float x2, float y2, float z2, int 
 
 void dibujarHoja(float x1, float y1, float z1, float anchoHoja)
 {
-  color strokeColour = color(124,60,0);
+  //color strokeColour = color(124,60,0);
   
-  float x2 = x1+15;
-  float y2 = y1+15;
-  float z2 = z1+15;
+  //float x2 = x1+weight;
+  //float y2 = y1+weight;
+  //float z2 = z1+weight;
 
-  PVector p1 = new PVector(x1, y1, z1);
+  //PVector p1 = new PVector(x1, y1, z1);
 
-  PVector p2 = new PVector(x2, y2, z2);
+  //PVector p2 = new PVector(x2, y2, z2);
 
-  PVector v1 = new PVector(x2-x1, y2-y1, z2-z1);
+  //PVector v1 = new PVector(x2-x1, y2-y1, z2-z1);
 
-  float rho = sqrt(pow(v1.x,2)+pow(v1.y,2)+pow(v1.z,2));
+  //float rho = sqrt(pow(v1.x,2)+pow(v1.y,2)+pow(v1.z,2));
 
-  float phi = acos(v1.z/rho);
+  //float phi = acos(v1.z/rho);
 
-  float the = atan2(v1.y,v1.x);
+  //float the = atan2(v1.y,v1.x);
 
-  v1.mult(0.5);
+  //v1.mult(0.5);
 
  
 
   pushMatrix();
 
-  translate(x1,y1,z1);
+  //translate(x1,y1,z1);
 
   // normally just   translate(v1.x, v1.y, v1.z);
 
-  translate(v1.x, v1.y, v1.z);
+  //translate(v1.x, v1.y, v1.z);
 
   //rotateZ(the);
 
@@ -244,12 +222,12 @@ void dibujarHoja(float x1, float y1, float z1, float anchoHoja)
 
   noStroke();
 
-  //fill(0,240,0);
+  //fill(strokeColour);
 
-  //box(15,15,p1.dist(p2)*1.2);
+  // box(weight,weight,p1.dist(p2)*1.2);
   
   //translate(0,0,z1);   
-  
+  //ellipse(x1,y1+10,30,30);
   //PShape hoja = createShape(ELLIPSE, x1, y1+10, anchoHoja, anchoHoja*2);
   //hoja.setTexture(imgHoja);
   //shape(hoja);
