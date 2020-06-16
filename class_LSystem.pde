@@ -116,10 +116,21 @@ class LSystem
             float y_delta = -ext_this * cos(state[2]); // se pone la y negativa para que crezca hacia arriba
             float z_delta = ext_this * random(-PI/4, PI/4);
 
-            stroke(col);
-            strokeWeight(1);
+            //stroke(col);
+            //strokeWeight(1);
 
-            line(state[0], state[1], state[3], state[0] + x_delta, state[1] + y_delta, state[3]+z_delta);
+             //translate(state[0],state[1],state[3]);
+            
+            PVector inicio = new PVector(state[0], state[1], state[3]);
+            PVector fin = new PVector(state[0] + x_delta, state[1] + y_delta, state[3]+z_delta);
+            
+            //drawCylinder(10, 10, 5, inicio, fin);
+            
+            MyBox(inicio.x, inicio.y, inicio.z, fin.x, fin.y, fin.z, 2);
+            
+            //translate(-state[0],-state[1],-state[3]);
+            
+            //line(state[0], state[1], state[3], state[0] + x_delta, state[1] + y_delta, state[3]+z_delta);
             state[0] += x_delta;
             state[1] += y_delta;
             state[3] += z_delta;

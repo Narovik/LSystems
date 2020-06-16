@@ -77,3 +77,88 @@ void draw ()
 
   
 }
+
+  void drawCylinder( int sides, float r1, float r2, PVector inicio, PVector fin)
+{
+    float angle = 360 / sides;
+    float h = inicio.dist(fin);
+    float halfHeight = h / 2;
+    // top
+    beginShape();
+    for (int i = 0; i < sides; i++) {
+        //translate(inicio.x,inicio.y,inicio.z);
+        float x = cos( radians( i * angle ) ) * r1;
+        float y = sin( radians( i * angle ) ) * r1;
+        vertex( x, halfHeight, -y);
+    }
+    endShape(CLOSE);
+    // bottom
+    beginShape();
+    for (int i = 0; i < sides; i++) {
+        //translate(fin.x,fin.y,fin.z);
+        float x = cos( radians( i * angle ) ) * r2;
+        float y = sin( radians( i * angle ) ) * r2;
+        vertex( x, -halfHeight, -y);
+    }
+    endShape(CLOSE);
+    // draw body
+    beginShape(TRIANGLE_STRIP);
+    for (int i = 0; i < sides + 1; i++) {
+        float x1 = cos( radians( i * angle ) ) * r1;
+        float y1 = sin( radians( i * angle ) ) * r1;
+        float x2 = cos( radians( i * angle ) ) * r2;
+        float y2 = sin( radians( i * angle ) ) * r2;
+        vertex( x1, halfHeight, -y1);
+        vertex( x2, -halfHeight, -y2);
+    }
+    endShape(CLOSE);
+}
+
+void MyBox(float x1, float y1, float z1,float x2, float y2, float z2,float weight)
+
+// was called drawLine; programmed by James Carruthers
+
+// see http://processing.org/discourse/yabb2/YaBB.pl?num=1262458611/0#9
+
+{
+  color strokeColour = color(124,60,0);
+
+  PVector p1 = new PVector(x1, y1, z1);
+
+  PVector p2 = new PVector(x2, y2, z2);
+
+  PVector v1 = new PVector(x2-x1, y2-y1, z2-z1);
+
+  float rho = sqrt(pow(v1.x,2)+pow(v1.y,2)+pow(v1.z,2));
+
+  float phi = acos(v1.z/rho);
+
+  float the = atan2(v1.y,v1.x);
+
+  v1.mult(0.5);
+
+ 
+
+  pushMatrix();
+
+  translate(x1,y1,z1);
+
+  // normally just   translate(v1.x, v1.y, v1.z);
+
+  translate(v1.x, v1.y, v1.z);
+
+  rotateZ(the);
+
+  rotateY(phi);
+
+  noStroke();
+
+  fill(strokeColour);
+
+  // box(weight,weight,p1.dist(p2)*1.2);
+
+  box(weight,weight,p1.dist(p2)*1.2);
+
+  popMatrix();
+
+}
