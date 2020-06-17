@@ -38,7 +38,7 @@ import uibooster.utils.*;
   
  int niveles = 11;
  
- int vectorPesos[] = {10,6,6,5,5,4,4,3,2,1,0}; 
+ int vectorPesos[] = {14,8,6,5,5,4,4,3,2,1,0}; 
  
  PShape nudos[] = new PShape[vectorPesos.length]; // Array de uniones entre segmentos del arbol (ramas)
  PShape hoja;
@@ -301,7 +301,7 @@ void dibujarRama(float x1, float y1, float z1,float x2, float y2, float z2, int 
 }
 
 
-void dibujarHoja(float x1, float y1, float z1, float anchoHoja)
+void dibujarHoja(float x1, float y1, float z1)
 {
   //color strokeColour = color(124,60,0);
   

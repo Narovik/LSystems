@@ -111,8 +111,16 @@ class LSystem
             float ext_this = extension/state[4] + random(-1.0 * extension * extension_chaos, extension * extension_chaos);
             float x_delta = ext_this * sin(state[2]);
             float y_delta = -ext_this * cos(state[2]); // se pone la y negativa para que crezca hacia arriba
-            float z_delta;
+            float z_delta = 0;
+            if (stack_size == 0){
+              z_delta = 0;
+            }else if(state[3] == 0){
               z_delta = ext_this * random(-PI/2, PI/2);
+            }else if(state[3] > 0){
+              z_delta = ext_this * random(-PI/3, PI/2);
+            }else{
+              z_delta = ext_this * random(-PI/2, PI/3);
+            }
             
             if(pos==0){
               ext_this = 100;
@@ -123,10 +131,7 @@ class LSystem
             
             PVector inicio = new PVector(state[0], state[1], state[3]);
             PVector fin = new PVector(state[0] + x_delta, state[1] + y_delta, state[3]+z_delta);
-            float ancho = 2;
-            if(pos==0) ancho = 4;
             
-            int anchoHoja = 10;
             
             if(pos+1 <= string.length() && string.charAt(pos+1) == ']')
               dibujarRama(inicio.x, inicio.y, inicio.z, fin.x, fin.y, fin.z, stack_size, true);
@@ -136,8 +141,8 @@ class LSystem
             
           
             if(pos>3){
-              dibujarHoja(fin.x, fin.y, fin.z, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
-              dibujarHoja(inicio.x, inicio.y, inicio.z, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
+              dibujarHoja(fin.x, fin.y, fin.z); // HOJA AL FINAL DEL SEGMENTO
+              dibujarHoja(inicio.x, inicio.y, inicio.z); // HOJA AL FINAL DEL SEGMENTO
              
              float dx = (fin.x-inicio.x)/numDivisiones;
              float dy = (fin.y-inicio.y)/numDivisiones;
@@ -146,7 +151,7 @@ class LSystem
              // DIBUJAR HOJAS
              for(int i=1; i<=numDivisiones; i++)
               {
-                dibujarHoja(dx*i+inicio.x, dy*i+inicio.y, dz*i+inicio.z, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
+                dibujarHoja(dx*i+inicio.x, dy*i+inicio.y, dz*i+inicio.z); // HOJA AL FINAL DEL SEGMENTO
               }
             
                
