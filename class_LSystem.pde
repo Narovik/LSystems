@@ -89,6 +89,7 @@ class LSystem
       state[2] = 0;
       state[3] = 0;
       state[4] = 1;
+      
       rule = default_rule;
       state_stack = new float[4096][5];
       for (int i = 0; i < string.length(); i++)
@@ -117,9 +118,9 @@ class LSystem
             }else if(state[3] == 0){
               z_delta = ext_this * random(-PI/2, PI/2);
             }else if(state[3] > 0){
-              z_delta = ext_this * random(-PI/3, PI/2);
+              z_delta = ext_this * random(-PI/8, PI/2);
             }else{
-              z_delta = ext_this * random(-PI/2, PI/3);
+              z_delta = ext_this * random(-PI/2, PI/8);
             }
             
             if(pos==0){

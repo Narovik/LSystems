@@ -64,7 +64,7 @@ void interfaz()
      
      .addSlider("Población hojas", 2, 10, 3, 2, 10)
     
-    .addSelection("Modelos propuestos", "F[+F-F[-F]]F[-F-F[-F]]", "F[+F-F[-F]]", "F[+F-F]")
+    .addSelection("Modelos propuestos", "F[+F-F[-F]]F[-F-F[-F]]", "F[-FF-F]F[+FF+F]", "FF[+F-F]F[-F+F]")
     
     .addButton("Reiniciar",new Runnable(){ public void run(){ extension=default_extension; extension_chaos=default_extension_chaos; angle=default_angle; iteraciones_del_dibujado=3; default_rule="F[+F-F[-F]]F[-F-F[-F]]"; } })
     
