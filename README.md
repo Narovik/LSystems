@@ -9,7 +9,7 @@
 En el presente repositorio se ha desarrollado una representación en Processing<sub>[1]</sub> del sauce llorón usando L-System<sub>[2]</sub>.
 
 <p align="center">
-  <img width="300" height="300" src="Imagenes/tree.png">
+  <img width="500" height="500" src="Imagenes/tree.png">
 </p>
 
 ## Estructura del proyecto
