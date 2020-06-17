@@ -28,7 +28,7 @@
 
 int     default_y_offset = 400;
 boolean default_draw_tips = true;
-
+boolean tronco_inicial = false;
 
 
 class LSystem
@@ -89,7 +89,6 @@ class LSystem
       state[2] = 0;
       state[3] = 0;
       state[4] = 1;
-      
       rule = default_rule;
       state_stack = new float[4096][5];
       for (int i = 0; i < string.length(); i++)
@@ -108,7 +107,7 @@ class LSystem
     switch (c)
     {
           case 'F':
-                      
+            tronco_inicial = false;          
             float ext_this = extension/state[4] + random(-1.0 * extension * extension_chaos, extension * extension_chaos);
             float x_delta = ext_this * sin(state[2]);
             float y_delta = -ext_this * cos(state[2]); // se pone la y negativa para que crezca hacia arriba
@@ -127,7 +126,7 @@ class LSystem
               ext_this = 100;
               z_delta=0;
               y_delta = -ext_this * cos(state[2]);
-              
+              tronco_inicial = true;
             }
             
             PVector inicio = new PVector(state[0], state[1], state[3]);
@@ -135,10 +134,10 @@ class LSystem
             
             
             if(pos+1 <= string.length() && string.charAt(pos+1) == ']')
-              dibujarRama(inicio.x, inicio.y, inicio.z, fin.x, fin.y, fin.z, stack_size, true);
+              dibujarRama(inicio.x, inicio.y, inicio.z, fin.x, fin.y, fin.z, stack_size, true,tronco_inicial);
                
             else 
-             dibujarRama(inicio.x, inicio.y, inicio.z, fin.x, fin.y, fin.z, stack_size, false);
+             dibujarRama(inicio.x, inicio.y, inicio.z, fin.x, fin.y, fin.z, stack_size, false,tronco_inicial);
             
           
             if(pos>3){
