@@ -21,33 +21,33 @@ En el presente repositorio se ha desarrollado una representación en Processing<
 
 ## Estructura del proyecto
 El proyecto se ha dividido en 4 ficheros. 
-* lsystems: fichero principal del prpoyecto que contiene los metodos **draw()** y **setup()**
+* lsystems: fichero principal del proyecto que contiene los métodos **draw()** y **setup()**
 * class_LSystem: fichero que contiene todo el desarrollo del L-System
-* Tree: fichero que contiene los metodos que dibujan el arbol
-* Form_interface: fichero que contiene el metodo que genera la interfaz de UiBooster<sub>[3]</sub>.
+* Tree: fichero que contiene los metodos que dibujan el árbol
+* Form_interface: fichero que contiene el método que genera la interfaz de UiBooster<sub>[3]</sub>.
 
 ## Interfaz de UiBooster
 * Iteraciones: número de iteraciones en la gramática de L-System.
-* Extension: lonitud máximo de la rama.
+* Extension: longitud máxima de la rama.
 * Extension chaos: alteración randomizada de la longitud de la rama.
-* Angulo: alteración de los angulos del arbol (Experimental).
-* Población hojas: Numero de hojas por rama.
+* Ángulo: alteración de los ángulos del árbol (Experimental).
+* Población hojas: Número de hojas por rama.
 * Modelos propuestos: Reglas de producción propuestas.
 
 <p align="center">
     <img width="150" height="500" src="Imagenes/Form.png">
 </p>
 
-## Controles de la camara
-* **W** : Acercar la camara al modelo.
-* **S** : Alejar la camara del modelo.
-* **A** : Girar la camara a la izquierda.
-* **D** : Girar la camara a la derecha.
-* **R** : Reiniciar la posición de la camara.
-* **↑** : Mover la camara hacia arriba.
-* **↓** : Mover la camara hacia abajo.
-* **←** : Mover la camara hacia la izquirda.
-* **→** : Mover la camara hacia la derecha.
+## Controles de la cámara
+* **W** : Acercar la cámara al modelo.
+* **S** : Alejar la cámara del modelo.
+* **A** : Girar la cámara a la izquierda.
+* **D** : Girar la cámara a la derecha.
+* **R** : Reiniciar la posición de la cámara.
+* **↑** : Mover la cámara hacia arriba.
+* **↓** : Mover la cámara hacia abajo.
+* **←** : Mover la cámara hacia la izquirda.
+* **→** : Mover la cámara hacia la derecha.
 
 ## Simbolos de L-System
 * **F** : Dibujar una rama.
