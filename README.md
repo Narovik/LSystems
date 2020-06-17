@@ -7,6 +7,10 @@
 
 #### Dependencias
 * [uibooster-for-processing](https://github.com/milchreis/uibooster-for-processing)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/milchreis/uibooster-for-processing/master/img/install.jpg">
+</p>
+
 
 ## Introducción
 En el presente repositorio se ha desarrollado una representación en Processing<sub>[1]</sub> del sauce llorón usando L-System<sub>[2]</sub>.
