@@ -31,6 +31,17 @@ El proyecto se ha dividido en 4 ficheros.
     <img width="150" height="500" src="Imagenes/Form.png">
 </p>
 
+## Controles de la camara
+* **W** : Acercar la camara al modelo.
+* **S** : Alejar la camara del modelo.
+* **A** : Girar la camara a la izquierda.
+* **D** : Girar la camara a la derecha.
+* **R** : Reiniciar la posición de la camara.
+* **↑** : Mover la camara hacia arriba.
+* **↓** : Mover la camara hacia abajo.
+* **←** : Mover la camara hacia la izquirda.
+* **→** : Mover la camara hacia la derecha.
+
 ## Simbolos de L-System
 * **F** : Dibujar una rama.
 * **+** : Rotar a la izquierda.
