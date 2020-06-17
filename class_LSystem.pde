@@ -138,12 +138,15 @@ class LSystem
             if(pos>3){
               dibujarHoja(fin.x, fin.y, fin.z, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
               dibujarHoja(inicio.x, inicio.y, inicio.z, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
-              
-             // DIBUJAR HOJAS
              
-             for(int i=2; i<numDivisiones; i++)
+             float dx = (fin.x-inicio.x)/numDivisiones;
+             float dy = (fin.y-inicio.y)/numDivisiones;
+             float dz = (fin.z-inicio.z)/numDivisiones;
+             
+             // DIBUJAR HOJAS
+             for(int i=1; i<=numDivisiones; i++)
               {
-                dibujarHoja((inicio.x+fin.x)/i, (inicio.y+fin.y)/i, (inicio.z+fin.z)/i, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
+                dibujarHoja(dx*i+inicio.x, dy*i+inicio.y, dz*i+inicio.z, anchoHoja); // HOJA AL FINAL DEL SEGMENTO
               }
             
                

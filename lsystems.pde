@@ -23,7 +23,7 @@ import uibooster.utils.*;
   float extension = default_extension;
   float extension_chaos = default_extension_chaos;
   
-  int numDivisiones=5; // Divisones del segmento para pintar hojas
+  int numDivisiones=3; // Divisones del segmento para pintar hojas
       
   // Regla por defecto para generar el arbol
    String default_rule = "F[+F-F[-F]]F[-F-F[-F]]";
@@ -36,7 +36,7 @@ import uibooster.utils.*;
 // L-System
   LSystem system;
   
- int niveles = 10;
+ int niveles = 11;
  
  int vectorPesos[] = {10,6,6,5,5,4,4,3,2,1,0}; 
  
@@ -62,7 +62,7 @@ void interfaz()
      
      .addSlider("Ángulo", 0, 360, 22, 60, 360)
      
-     .addSlider("Población hojas", 2, 10, 2, 2, 10)
+     .addSlider("Población hojas", 2, 10, 3, 2, 10)
     
     .addSelection("Modelos propuestos", "F[+F-F[-F]]F[-F-F[-F]]", "F[+F-F[-F]]", "F[+F-F]")
     
